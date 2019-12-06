@@ -36,7 +36,7 @@ open class CombinedChartRenderer: DataRenderer
     }
     
     /// Creates the renderers needed for this combined-renderer in the required order. Also takes the DrawOrder into consideration.
-    public func createRenderers()
+    open func createRenderers()
     {
         _renderers = [DataRenderer]()
         
