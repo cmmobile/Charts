@@ -1,8 +1,12 @@
 //
 //  Platform+Graphics.swift
-//  
+//  Charts
 //
-//  Created by Jacob Christie on 2019-10-15.
+//  Copyright 2015 Daniel Cohen Gindi & Philipp Jahoda
+//  A port of MPAndroidChart for iOS
+//  Licensed under Apache License 2.0
+//
+//  https://github.com/danielgindi/Charts
 //
 
 // MARK: - UIKit
@@ -51,7 +55,7 @@ func NSUIGraphicsBeginImageContextWithOptions(_ size: CGSize, _ opaque: Bool, _ 
 #endif
 
 // MARK: - AppKit
-#if canImport(AppKit)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 
 func NSUIGraphicsGetCurrentContext() -> CGContext?
