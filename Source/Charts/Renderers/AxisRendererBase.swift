@@ -107,12 +107,16 @@ open class AxisRendererBase: Renderer
         // Find out how much spacing (in y value space) between axis values
         let rawInterval = range / Double(labelCount)
         var interval = rawInterval.roundedToNextSignficant()
-        
         // If granularity is enabled, then do not allow the interval to go below specified granularity.
         // This is used to avoid repeated values when rounding values for display.
         if axis.granularityEnabled
         {
             interval = interval < axis.granularity ? axis.granularity : interval
+        }
+        guard interval.isNaN == false else {
+            axis.entries = [Double]()
+            axis.centeredEntries = [Double]()
+            return
         }
         
         // Normalize interval
