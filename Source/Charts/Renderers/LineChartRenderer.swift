@@ -82,6 +82,8 @@ open class LineChartRenderer: LineRadarRenderer
             
         case .horizontalBezier:
             drawHorizontalBezier(context: context, dataSet: dataSet)
+        case .stockTrend:
+            drawStockTrend(context: context, dataSet: dataSet)
         }
         
         context.restoreGState()
@@ -790,3 +792,133 @@ open class LineChartRenderer: LineRadarRenderer
         return element
     }
 }
+
+// MARK: - CMoney Extension
+extension LineChartRenderer {
+    
+    /// draw 股票走勢圖
+    @objc open func drawStockTrend(context: CGContext, dataSet: ILineChartDataSet) {
+        guard let dataProvider = dataProvider else { return }
+        
+        let trans = dataProvider.getTransformer(forAxis: dataSet.axisDependency)
+        
+        let valueToPixelMatrix = trans.valueToPixelMatrix
+        
+        let entryCount = dataSet.entryCount
+        let pointsPerEntryPair = 2
+        let refPrice: CGFloat = 302
+        let valueUpColor: UIColor = .red
+        let valueDownColor: UIColor = .green
+        let refPriceColor: UIColor = .white
+        
+        let phaseY = animator.phaseY
+        
+        _xBounds.set(chart: dataProvider, dataSet: dataSet, animator: animator)
+        
+        // if drawing filled is enabled
+        if dataSet.isDrawFilledEnabled && entryCount > 0 {
+            drawLinearFill(context: context, dataSet: dataSet, trans: trans, bounds: _xBounds)
+        }
+        
+        context.saveGState()
+
+        if _lineSegments.count != pointsPerEntryPair {
+            // Allocate once in correct size
+            _lineSegments = [CGPoint](repeating: CGPoint(), count: pointsPerEntryPair)
+        }
+
+        for j in _xBounds.dropLast() {
+            var e: ChartDataEntry! = dataSet.entryForIndex(j)
+            
+            if e == nil { continue }
+            
+            _lineSegments[0].x = CGFloat(e.x)
+            _lineSegments[0].y = CGFloat(e.y * phaseY)
+            let valueStart = _lineSegments[0]
+            let valueEnd: CGPoint
+            if j < _xBounds.max {
+                // TODO: remove the check.
+                // With the new XBounds iterator, j is always smaller than _xBounds.max
+                // Keeping this check for a while, if xBounds have no further breaking changes, it should be safe to remove the check
+                e = dataSet.entryForIndex(j + 1)
+                if e == nil { break }
+                valueEnd = CGPoint(x: CGFloat(e.x), y: CGFloat(e.y * phaseY))
+                _lineSegments[1] = valueEnd
+            } else {
+                valueEnd = _lineSegments[0]
+                _lineSegments[1] = valueEnd
+            }
+
+            for i in 0..<_lineSegments.count {
+                _lineSegments[i] = _lineSegments[i].applying(valueToPixelMatrix)
+            }
+            
+            if !viewPortHandler.isInBoundsRight(_lineSegments[0].x)
+            {
+                break
+            }
+            
+            // Determine the start and end coordinates of the line, and make sure they differ.
+            let lastCoordinate = _lineSegments[1]
+            guard
+                let firstCoordinate = _lineSegments.first,
+                firstCoordinate != lastCoordinate else { continue }
+            
+            // make sure the lines don't do shitty things outside bounds
+            if !viewPortHandler.isInBoundsLeft(lastCoordinate.x) ||
+                !viewPortHandler.isInBoundsTop(max(firstCoordinate.y, lastCoordinate.y)) ||
+                !viewPortHandler.isInBoundsBottom(min(firstCoordinate.y, lastCoordinate.y))
+            {
+                continue
+            }
+            
+            if valueStart.y == refPrice && valueEnd.y == refPrice {
+                context.setStrokeColor(refPriceColor.cgColor)
+                context.strokeLineSegments(between: _lineSegments)
+            } else if valueStart.y >= refPrice && valueEnd.y >= refPrice {
+                context.setStrokeColor(valueUpColor.cgColor)
+                context.strokeLineSegments(between: _lineSegments)
+            } else if valueStart.y <= refPrice && valueEnd.y <= refPrice {
+                context.setStrokeColor(valueDownColor.cgColor)
+                context.strokeLineSegments(between: _lineSegments)
+            } else {
+                var color = valueStart.y > valueEnd.y ? valueUpColor : valueDownColor
+                let crossRefPriceX = (abs(valueStart.y - refPrice) / abs(valueStart.y - valueEnd.y)) * abs(valueEnd.x - valueStart.x) + valueStart.x
+                let crossRefPricePoint: CGPoint = .init(x: crossRefPriceX, y: refPrice)
+                _lineSegments[0] = valueStart
+                _lineSegments[1] = crossRefPricePoint
+                for i in 0..<_lineSegments.count {
+                    _lineSegments[i] = _lineSegments[i].applying(valueToPixelMatrix)
+                }
+                context.setStrokeColor(color.cgColor)
+                context.strokeLineSegments(between: _lineSegments)
+                
+                color = valueStart.y > valueEnd.y ? valueDownColor : valueUpColor
+                _lineSegments[0] = crossRefPricePoint
+                _lineSegments[1] = valueEnd
+                for i in 0..<_lineSegments.count {
+                    _lineSegments[i] = _lineSegments[i].applying(valueToPixelMatrix)
+                }
+                context.setStrokeColor(color.cgColor)
+                context.strokeLineSegments(between: _lineSegments)
+            }
+        }
+        
+        context.restoreGState()
+    }
+    
+}
+#if DEBUG
+
+extension UIColor {
+    
+    static func random() -> UIColor {
+        return UIColor(red: CGFloat(arc4random()) / CGFloat(UInt32.max),
+                       green: CGFloat(arc4random()) / CGFloat(UInt32.max),
+                       blue: CGFloat(arc4random()) / CGFloat(UInt32.max),
+                       alpha: 1.0)
+    }
+    
+}
+
+#endif
