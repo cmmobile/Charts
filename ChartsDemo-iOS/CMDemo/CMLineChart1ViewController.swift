@@ -33,7 +33,7 @@ class CMLineChart1ViewController: UIViewController {
             return ChartDataEntry(x: Double(i), y: val, icon: #imageLiteral(resourceName: "icon"))
         }
         
-        let set1 = LineChartDataSet(entries: values, label: "DataSet 1")
+        let set1 = StockTrendLineChartDataSet(entries: values, label: "label")
         set1.drawIconsEnabled = false
         set1.lineWidth = 1
         set1.setColor(.red)
@@ -41,9 +41,10 @@ class CMLineChart1ViewController: UIViewController {
         set1.highlightLineWidth = 1
         set1.drawCirclesEnabled = false
         set1.drawValuesEnabled = false
-//        set1.drawFilledEnabled = true
-//        set1.fillAlpha = 0.2
-        set1.mode = .stockTrend
+        
+        set1.refPrice = 302
+        set1.valueUpColor = .systemPink
+        set1.valueDownColor = .yellow
         return set1
     }
     

@@ -806,10 +806,11 @@ extension LineChartRenderer {
         
         let entryCount = dataSet.entryCount
         let pointsPerEntryPair = 2
-        let refPrice: CGFloat = 302
-        let valueUpColor: UIColor = .red
-        let valueDownColor: UIColor = .green
-        let refPriceColor: UIColor = .white
+        let stockTrendSet = dataSet as? StockTrendLineChartDataSet
+        let refPrice: CGFloat = stockTrendSet?.refPrice ?? 0
+        let valueUpColor: UIColor = stockTrendSet?.valueUpColor ?? .red
+        let valueDownColor: UIColor = stockTrendSet?.valueDownColor ?? .green
+        let refPriceColor: UIColor = stockTrendSet?.refPriceColor ?? .white
         
         let phaseY = animator.phaseY
         
