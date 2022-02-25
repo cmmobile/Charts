@@ -12,12 +12,16 @@ import Charts
 class CMLineChart1ViewController: UIViewController {
     
     @IBOutlet weak var chartView: CombinedChartView!
+    @IBOutlet weak var fillSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         chartView.legend.enabled = false
         chartView.animate(xAxisDuration: 3, yAxisDuration: 0)
-        
+        relaodChart()
+    }
+    
+    func relaodChart() {
         let dataSet = getDataSet()
         let lineData = LineChartData(dataSet: dataSet)
         let combineData = CombinedChartData()
@@ -41,11 +45,15 @@ class CMLineChart1ViewController: UIViewController {
         set1.highlightLineWidth = 1
         set1.drawCirclesEnabled = false
         set1.drawValuesEnabled = false
+        set1.drawFilledEnabled = fillSwitch.isOn
         
-        set1.refPrice = 302
+        set1.refPrice = 302.5
         set1.valueUpColor = .systemPink
         set1.valueDownColor = .yellow
         return set1
     }
     
+    @IBAction func fillAction(_ sender: Any) {
+        relaodChart()
+    }
 }
