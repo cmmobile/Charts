@@ -1,3 +1,21 @@
+# CMChart
+
+基於 danielgindi/Charts 3.6.0的bug修正，或者增加需要的功能，目前以股票圖表為主題。
+
+### 0.0.1
+
+feat:  
+1.[增加Bar圖正負邊界可以變動的功能] (https://github.com/cmmobile/Charts/pull/10/commits/8b8487b1d7d59ada361bf6cb1e5bd3d1bf586729)   
+2.[增加水平Bar圖的 客製化offset] (https://github.com/cmmobile/Charts/commit/3f1a7b8f38d92034f447cd76941df44dc4200b53)  
+3.[open CombinedChartRenderer中的 createRenderers]  (https://github.com/cmmobile/Charts/commit/feb84be2)
+
+fix:  
+1.[防止無限浮點數 直接轉換為 Int](https://github.com/cmmobile/Charts/commit/a5b76c04f080de76ff77eb80ff4cb203fab3611d)  
+2.[AxisRendererBase NaN 參數處理防閃退](https://github.com/cmmobile/Charts/commit/280c6ed2)
+
+# -
+
+
 **Version 3.4.0**, synced to [MPAndroidChart #f6a398b](https://github.com/PhilJay/MPAndroidChart/commit/f6a398b)
 
 ![alt tag](https://raw.github.com/danielgindi/Charts/master/Assets/feature_graphic.png)
