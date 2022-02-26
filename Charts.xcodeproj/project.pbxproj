@@ -103,6 +103,7 @@
 		98E2EEF45E8933E4AD182D58 /* ChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EFAD7920F76360ADB3B5F5 /* ChartViewBase.swift */; };
 		9A26C8DB1F87B01700367599 /* DataApproximator+N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26C8DA1F87B01700367599 /* DataApproximator+N.swift */; };
 		9C91C151608E2D6E19B1EAD1 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F099502DA50C56204E7B744 /* Range.swift */; };
+		9D7BCCC627C738F200BF7388 /* StockTrendLineChartDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7BCCC527C738F200BF7388 /* StockTrendLineChartDataSet.swift */; };
 		9F760570BCECB0BF5727AF90 /* BarLineChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C6D3723C4E001B119CA0C8 /* BarLineChartViewBase.swift */; };
 		A40ACF0CCE96EEE104B0463D /* IValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAA8AA30C377D54D22A577A /* IValueFormatter.swift */; };
 		A692D8BDE42717F69DB790BE /* HorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6021C9E424C36116AEA78CC9 /* HorizontalBarChartView.swift */; };
@@ -268,6 +269,7 @@
 		998F2BFE318471AFC05B50AC /* IHighlighter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IHighlighter.swift; path = Source/Charts/Highlight/IHighlighter.swift; sourceTree = "<group>"; };
 		9A26C8DA1F87B01700367599 /* DataApproximator+N.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DataApproximator+N.swift"; path = "Source/Charts/Filters/DataApproximator+N.swift"; sourceTree = "<group>"; };
 		9D7184C8A5A60A3522AB9B05 /* BarChartDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BarChartDataProvider.swift; path = Source/Charts/Interfaces/BarChartDataProvider.swift; sourceTree = "<group>"; };
+		9D7BCCC527C738F200BF7388 /* StockTrendLineChartDataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockTrendLineChartDataSet.swift; path = Source/Charts/Data/Implementations/Standard/StockTrendLineChartDataSet.swift; sourceTree = "<group>"; };
 		9DCD13D558BA177D5952AD66 /* PieChartView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PieChartView.swift; path = Source/Charts/Charts/PieChartView.swift; sourceTree = "<group>"; };
 		9E7C673B9ED4340F550A9283 /* LegendEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegendEntry.swift; path = Source/Charts/Components/LegendEntry.swift; sourceTree = "<group>"; };
 		A140F644332704916947B58C /* CombinedChartDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CombinedChartDataProvider.swift; path = Source/Charts/Interfaces/CombinedChartDataProvider.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				0DDE409E9ECF54D2C146A6F0 /* CombinedChartData.swift */,
 				4C978F31F23C7D21197DC2A1 /* LineChartData.swift */,
 				A5A75AA73C5AA381DA517959 /* LineChartDataSet.swift */,
+				9D7BCCC527C738F200BF7388 /* StockTrendLineChartDataSet.swift */,
 				45E31A4356CC6F283C29954B /* LineRadarChartDataSet.swift */,
 				C58BD7B14BEA440783ED8D2B /* LineScatterCandleRadarChartDataSet.swift */,
 				6E03A4987F72414A02A0631B /* PieChartData.swift */,
@@ -972,6 +975,7 @@
 				8102A555DD6C93AC1290EA7C /* Fill.swift in Sources */,
 				E9FF0ECB5E0CA92DBF4C1BC4 /* Platform.swift in Sources */,
 				DE0F434FE8C24C52B023370F /* Transformer.swift in Sources */,
+				9D7BCCC627C738F200BF7388 /* StockTrendLineChartDataSet.swift in Sources */,
 				8A463E2947F211C594CA5E95 /* TransformerHorizontalBarChart.swift in Sources */,
 				515E286E6C47594D3FFA3DD1 /* ViewPortHandler.swift in Sources */,
 			);

@@ -39,4 +39,7 @@ public protocol IBarChartDataSet: IBarLineScatterCandleBubbleChartDataSet
     
     /// array of labels used to describe the different values of the stacked bars
     var stackLabels: [String] { get set }
+    
+    /// 更改上下Bar圖的界線
+    var cmCutUpLine: Double { get set }
 }

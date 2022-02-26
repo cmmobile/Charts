@@ -1,8 +1,59 @@
+
+
+# CMChart
+
+基於 danielgindi/Charts 3.6.0的bug修正，或者增加需要的功能，目前以股票圖表為主題。
+
+### 0.0.1
+
+feat:  
+1.[增加Bar圖正負邊界可以變動的功能] (https://github.com/cmmobile/Charts/pull/10/commits/8b8487b1d7d59ada361bf6cb1e5bd3d1bf586729)   
+2.[增加水平Bar圖的 客製化offset] (https://github.com/cmmobile/Charts/commit/3f1a7b8f38d92034f447cd76941df44dc4200b53)  
+3.[open CombinedChartRenderer中的 createRenderers]  (https://github.com/cmmobile/Charts/commit/feb84be2)
+
+fix:  
+1.[防止無限浮點數 直接轉換為 Int](https://github.com/cmmobile/Charts/commit/a5b76c04f080de76ff77eb80ff4cb203fab3611d)  
+2.[AxisRendererBase NaN 參數處理防閃退](https://github.com/cmmobile/Charts/commit/280c6ed2)
+
 **Version 3.5.0**, synced to [MPAndroidChart #f6a398b](https://github.com/PhilJay/MPAndroidChart/commit/f6a398b)
+
+**Version 3.4.0**, synced to [MPAndroidChart #f6a398b](https://github.com/PhilJay/MPAndroidChart/commit/f6a398b)
 
 ![alt tag](https://raw.github.com/danielgindi/Charts/master/Assets/feature_graphic.png)
   ![Supported Platforms](https://img.shields.io/cocoapods/p/Charts.svg) [![Releases](https://img.shields.io/github/release/danielgindi/Charts.svg)](https://github.com/danielgindi/Charts/releases) [![Latest pod release](https://img.shields.io/cocoapods/v/Charts.svg)](http://cocoapods.org/pods/charts) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Build Status](https://travis-ci.org/danielgindi/Charts.svg?branch=master)](https://travis-ci.org/danielgindi/Charts) [![codecov](https://codecov.io/gh/danielgindi/Charts/branch/master/graph/badge.svg)](https://codecov.io/gh/danielgindi/Charts)
 [![Join the chat at https://gitter.im/danielgindi/Charts](https://badges.gitter.im/danielgindi/Charts.svg)](https://gitter.im/danielgindi/Charts?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## For making custom charts that need to override source code
+
+### Pod install guide
+
+To use the `master` branch of the repository:
+
+`pod 'Charts', :git => 'https://github.com/cmmobile/Charts.git'`
+
+To use a different branch of the repository:
+
+`pod 'Charts', :git => 'https://github.com/cmmobile/Charts.git', :branch => 'develope'`
+
+To use a tag of the repository:
+
+`pod 'Charts', :git => 'https://github.com/cmmobile/Charts.git', :tag => '1.0.0'`
+
+Or specify a commit:
+
+`pod 'Charts', :git => 'https://github.com/cmmobile/Charts.git', :commit => '61ba6666'`
+
+### PR rules:
+
+![git_flow](./Assets/git_flow.png)
+
+- Changes need to pass code review, and should be viewed by half of developers in team.
+- Commit message and PR message should be written in English.
+- If possible, please attache a screen shot or screen record in PR.
+- Please checkout from `develope` branch and PR in `develope` branch.
+
+
+--
 
 ### Just a heads up: Charts 3.0 has some breaking changes. Please read [the release/migration notes](https://github.com/danielgindi/Charts/releases/tag/v3.0.0). 
 ### Another heads up: ChartsRealm is now in a [separate repo](https://github.com/danielgindi/ChartsRealm). Pods is also now `Charts` and `ChartsRealm`, instead of ~`Charts/Core`~ and ~`Charts/Realm`~

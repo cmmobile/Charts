@@ -72,7 +72,11 @@ open class DataRenderer: Renderer
     @objc open func isDrawingValuesAllowed(dataProvider: ChartDataProvider?) -> Bool
     {
         guard let data = dataProvider?.data else { return false }
-        return data.entryCount < Int(CGFloat(dataProvider?.maxVisibleCount ?? 0) * viewPortHandler.scaleX)
+        let estimateCount = CGFloat(dataProvider?.maxVisibleCount ?? 0) * viewPortHandler.scaleX
+        guard estimateCount.isFinite == true else {
+            return false
+        }
+        return data.entryCount < Int(estimateCount)
     }
 
     /// Creates an ```NSUIAccessibilityElement``` that acts as the first and primary header describing a chart view.

@@ -18,6 +18,8 @@ open class LineChartDataSet: LineRadarChartDataSet, ILineChartDataSet
     @objc(LineChartMode)
     public enum Mode: Int
     {
+        /// 股票走勢圖
+        case stockTrend
         case linear
         case stepped
         case cubicBezier
