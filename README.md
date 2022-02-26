@@ -1,3 +1,5 @@
+
+
 # CMChart
 
 基於 danielgindi/Charts 3.6.0的bug修正，或者增加需要的功能，目前以股票圖表為主題。
@@ -13,8 +15,7 @@ fix:
 1.[防止無限浮點數 直接轉換為 Int](https://github.com/cmmobile/Charts/commit/a5b76c04f080de76ff77eb80ff4cb203fab3611d)  
 2.[AxisRendererBase NaN 參數處理防閃退](https://github.com/cmmobile/Charts/commit/280c6ed2)
 
-# -
-
+**Version 3.5.0**, synced to [MPAndroidChart #f6a398b](https://github.com/PhilJay/MPAndroidChart/commit/f6a398b)
 
 **Version 3.4.0**, synced to [MPAndroidChart #f6a398b](https://github.com/PhilJay/MPAndroidChart/commit/f6a398b)
 
@@ -97,12 +98,18 @@ In order to correctly compile:
    - You'll need to add `ChartsRealm` as a dependency too.
 
 ## 3rd party tutorials
+#### Video tutorials
 
+* [Chart in Swift - Setting Up a Basic Line Chart Using iOS Charts(Alex Nagy)](https://www.youtube.com/watch?v=mWhwe_tLNE8&list=PL_csAAO9PQ8bjzg-wxEff1Fr0Y5W1hrum&index=5)
+
+#### Blog posts
 * [Using Realm and Charts with Swift 3 in iOS 10 (Sami Korpela)](https://medium.com/@skoli/using-realm-and-charts-with-swift-3-in-ios-10-40c42e3838c0#.2gyymwfh8)
 * [Creating a Line Chart in Swift 3 and iOS 10 (Osian Smith)](https://medium.com/@OsianSmith/creating-a-line-chart-in-swift-3-and-ios-10-2f647c95392e)
 * [Beginning Set-up and Example Using Charts with Swift 3](https://github.com/annalizhaz/ChartsForSwiftBasic)
 * [Creating a Radar Chart in Swift (David Piper)](https://medium.com/@HeyDaveTheDev/creating-a-radar-chart-in-swift-5791afcf92f0)
-* Want your tutorial to show here? Create a PR!
+* [Plotting in IOS using Charts framework with SwiftUI (Evgeny Basisty)](https://medium.com/@zzzzbh/plotting-in-ios-using-charts-framework-with-swiftui-222034a2bea6)
+
+Want your tutorial to show here? Create a PR!
 
 ## Troubleshooting
 
@@ -130,8 +137,8 @@ For [Realm](https://realm.io/) support, please add `pod 'ChartsRealm'` too.
 Charts now include Carthage prebuilt binaries.
 
 ```carthage
-github "danielgindi/Charts" == 3.4.0
-github "danielgindi/Charts" ~> 3.4.0
+github "danielgindi/Charts" == 3.5.0
+github "danielgindi/Charts" ~> 3.5.0
 ```
 
 In order to build the binaries for a new release, use `carthage build --no-skip-current && carthage archive Charts`.
