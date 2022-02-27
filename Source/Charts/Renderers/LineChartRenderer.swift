@@ -937,22 +937,11 @@ extension LineChartRenderer {
             throw NSError(domain: "bounds.min entry nil", code: -1, userInfo: nil)
         }
         var valueStart: CGPoint = .init(x: CGFloat(e.x), y: CGFloat(e.y * phaseY))
-        if valueStart.y > refPrice {
-            filledUp.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
-            filledUp.addLine(to: valueStart, transform: matrix)
-            
-            filledDown.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
-        } else {
-            filledUp.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
-            
-            filledDown.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
-            filledDown.addLine(to: valueStart, transform: matrix)
-            print("DEV \(valueStart.x), y: \(refPrice)")
-            print("DEV valueStart \(valueStart)")
-        }
+        filledUp.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
+        filledDown.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
         
         // create a new path
-        for x in stride(from: bounds.min + 1, through: bounds.range + bounds.min, by: 1) {
+        for x in stride(from: bounds.min, through: bounds.range + bounds.min, by: 1) {
             guard let e = dataSet.entryForIndex(x) else { continue }
             let valueEnd: CGPoint = .init(x: e.x, y: e.y)
             defer {
