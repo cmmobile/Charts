@@ -4,8 +4,7 @@
 
 基於 danielgindi/Charts 3.6.0的bug修正，或者增加需要的功能，目前以股票圖表為主題。
 
--
-
+# 
 
 **Version 3.4.0**, synced to [MPAndroidChart #f6a398b](https://github.com/PhilJay/MPAndroidChart/commit/f6a398b)
 
