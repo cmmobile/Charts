@@ -24,17 +24,34 @@
                                     <constraint firstAttribute="height" constant="350" id="Wko-Jr-3fP"/>
                                 </constraints>
                             </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mjY-gO-JF8">
+                                <rect key="frame" x="66" y="510.5" width="51" height="31"/>
+                                <connections>
+                                    <action selector="fillAction:" destination="Y6W-OH-hqX" eventType="valueChanged" id="hUb-Wq-zQr"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="填色" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGy-pp-BCB">
+                                <rect key="frame" x="20" y="514" width="41" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="L8R-hK-EM4" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="8AB-jh-rzw"/>
+                            <constraint firstItem="TGy-pp-BCB" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="OLv-lc-2k0"/>
                             <constraint firstItem="L8R-hK-EM4" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="RSX-yh-dQG"/>
                             <constraint firstItem="L8R-hK-EM4" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="100" id="bFP-Xg-xGq"/>
+                            <constraint firstItem="mjY-gO-JF8" firstAttribute="leading" secondItem="TGy-pp-BCB" secondAttribute="trailing" constant="5" id="cjG-Gr-cPD"/>
+                            <constraint firstItem="mjY-gO-JF8" firstAttribute="centerY" secondItem="TGy-pp-BCB" secondAttribute="centerY" id="qFl-kz-xa3"/>
+                            <constraint firstItem="TGy-pp-BCB" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="20" id="s5m-fz-6RJ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="chartView" destination="L8R-hK-EM4" id="QAt-dC-hBy"/>
+                        <outlet property="fillSwitch" destination="mjY-gO-JF8" id="ix2-8w-rLb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

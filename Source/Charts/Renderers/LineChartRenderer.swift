@@ -818,7 +818,7 @@ extension LineChartRenderer {
         
         // if drawing filled is enabled
         if dataSet.isDrawFilledEnabled && entryCount > 0 {
-            drawLinearFill(context: context, dataSet: dataSet, trans: trans, bounds: _xBounds)
+            drawStockTrendFill(context: context, dataSet: dataSet, trans: trans, bounds: _xBounds, upColor: valueUpColor, downColor: valueDownColor, refPrice: refPrice)
         }
         
         context.saveGState()
@@ -908,18 +908,82 @@ extension LineChartRenderer {
         context.restoreGState()
     }
     
-}
-#if DEBUG
-
-extension UIColor {
+    /// fill 股票走勢圖
+    private func drawStockTrendFill(context: CGContext, dataSet: ILineChartDataSet, trans: Transformer, bounds: XBounds, upColor: UIColor, downColor: UIColor, refPrice: CGFloat) {
+        guard let filled = try? generateStockTrendFilledPath(
+                dataSet: dataSet,
+                bounds: bounds,
+                matrix: trans.valueToPixelMatrix,
+                refPrice: refPrice) else {return}
+        
+        if dataSet.fill != nil {
+            #if DEBUG
+            print("[CMChart] StockTrend 未支援 dataSet.fill")
+            #endif
+        }
+        drawFilledPath(context: context, path: filled.0, fillColor: upColor, fillAlpha: dataSet.fillAlpha)
+        drawFilledPath(context: context, path: filled.1, fillColor: downColor, fillAlpha: dataSet.fillAlpha)
+    }
     
-    static func random() -> UIColor {
-        return UIColor(red: CGFloat(arc4random()) / CGFloat(UInt32.max),
-                       green: CGFloat(arc4random()) / CGFloat(UInt32.max),
-                       blue: CGFloat(arc4random()) / CGFloat(UInt32.max),
-                       alpha: 1.0)
+    /// get 股票走勢圖填色Path
+    private func generateStockTrendFilledPath(dataSet: ILineChartDataSet, bounds: XBounds, matrix: CGAffineTransform, refPrice: CGFloat) throws -> (CGPath, CGPath) {
+        let phaseY = animator.phaseY
+        let matrix = matrix
+        
+        let filledUp = CGMutablePath()
+        let filledDown = CGMutablePath()
+        
+        guard let e = dataSet.entryForIndex(bounds.min) else {
+            throw NSError(domain: "bounds.min entry nil", code: -1, userInfo: nil)
+        }
+        var valueStart: CGPoint = .init(x: CGFloat(e.x), y: CGFloat(e.y * phaseY))
+        filledUp.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
+        filledDown.move(to: .init(x: valueStart.x, y: refPrice), transform: matrix)
+        
+        // create a new path
+        for x in stride(from: bounds.min, through: bounds.range + bounds.min, by: 1) {
+            guard let e = dataSet.entryForIndex(x) else { continue }
+            let valueEnd: CGPoint = .init(x: e.x, y: e.y)
+            defer {
+                valueStart = valueEnd
+            }
+            if valueEnd.y == refPrice {
+                filledUp.addLine(to: CGPoint(x: CGFloat(e.x), y: CGFloat(e.y * phaseY)), transform: matrix)
+                filledDown.addLine(to: CGPoint(x: CGFloat(e.x), y: CGFloat(e.y * phaseY)), transform: matrix)
+                continue
+            }
+            
+            if valueStart.y >= refPrice && valueEnd.y >= refPrice {
+                filledUp.addLine(to: CGPoint(x: CGFloat(e.x), y: CGFloat(e.y * phaseY)), transform: matrix)
+            } else if valueStart.y <= refPrice && valueEnd.y <= refPrice {
+                filledDown.addLine(to: CGPoint(x: CGFloat(e.x), y: CGFloat(e.y * phaseY)), transform: matrix)
+            } else if valueEnd.y > refPrice {// 上升焦點線
+                let crossRefPriceX = (abs(valueStart.y - refPrice) / abs(valueStart.y - valueEnd.y)) * abs(valueEnd.x - valueStart.x) + valueStart.x
+                let crossRefPricePoint: CGPoint = .init(x: crossRefPriceX, y: refPrice)
+                filledUp.addLine(to: crossRefPricePoint, transform: matrix)
+                filledUp.addLine(to: valueEnd, transform: matrix)
+                
+                filledDown.addLine(to: crossRefPricePoint, transform: matrix)
+            } else if valueEnd.y < refPrice {// 下降焦點線
+                let crossRefPriceX = (abs(valueStart.y - refPrice) / abs(valueStart.y - valueEnd.y)) * abs(valueEnd.x - valueStart.x) + valueStart.x
+                let crossRefPricePoint: CGPoint = .init(x: crossRefPriceX, y: refPrice)
+                filledUp.addLine(to: crossRefPricePoint, transform: matrix)
+                
+                filledDown.addLine(to: crossRefPricePoint, transform: matrix)
+                filledDown.addLine(to: valueEnd, transform: matrix)
+            }
+        }
+        
+        // close up
+        dataSet.entryForIndex(bounds.range + bounds.min)
+            .map {
+                filledUp.addLine(to: CGPoint(x: CGFloat($0.x), y: refPrice), transform: matrix)
+                filledDown.addLine(to: CGPoint(x: CGFloat($0.x), y: refPrice), transform: matrix)
+            }
+        filledUp.closeSubpath()
+        filledDown.closeSubpath()
+        
+        return (filledUp, filledDown)
     }
     
 }
-
-#endif
