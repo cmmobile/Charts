@@ -45,6 +45,7 @@ class CMLineChart1ViewController: UIViewController {
         set1.highlightLineWidth = 1
         set1.drawCirclesEnabled = false
         set1.drawValuesEnabled = false
+        
         set1.drawFilledEnabled = fillSwitch.isOn
         
         set1.refPrice = 302.5

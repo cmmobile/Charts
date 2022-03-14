@@ -20,8 +20,11 @@ class CMDemoListViewController: UIViewController {
     
     var tableView: UITableView!
     private var itemDefs = [ItemDef(title: "即時走勢線圖",
-                            subtitle: "分段顏色實作",
-                            class: CMLineChart1ViewController.self)
+                                    subtitle: "分段顏色實作",
+                                    class: CMLineChart1ViewController.self),
+                            ItemDef(title: "畫線Demo",
+                                    subtitle: "",
+                                    class: CMLineChart2ViewController.self)
     ]
     
     override func loadView() {

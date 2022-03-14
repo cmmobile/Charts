@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Line Chart2 View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="CMLineChart2ViewController" id="Y6W-OH-hqX" customClass="CMLineChart2ViewController" customModule="CMDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8R-hK-EM4" customClass="DrawChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="144" width="414" height="350"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="Wko-Jr-3fP"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-UH-Ptf">
+                                <rect key="frame" x="15" y="509" width="53" height="30"/>
+                                <state key="normal" title="random"/>
+                                <connections>
+                                    <action selector="randomAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="X6J-kY-7Dc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I9r-ij-CSN">
+                                <rect key="frame" x="98" y="509" width="62" height="30"/>
+                                <state key="normal" title="開始畫線"/>
+                                <connections>
+                                    <action selector="startDrawAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="rbK-H3-hZj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbw-RF-z9c">
+                                <rect key="frame" x="174" y="509" width="31" height="30"/>
+                                <state key="normal" title="儲存"/>
+                                <connections>
+                                    <action selector="saveAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Yv2-iM-JZ1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfo-OB-4sg">
+                                <rect key="frame" x="221" y="509" width="31" height="30"/>
+                                <state key="normal" title="取消"/>
+                                <connections>
+                                    <action selector="cacnelAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Vpy-gh-zN9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="vbw-RF-z9c" firstAttribute="leading" secondItem="I9r-ij-CSN" secondAttribute="trailing" constant="14" id="3Cz-Tb-oQj"/>
+                            <constraint firstItem="I9r-ij-CSN" firstAttribute="leading" secondItem="tg2-UH-Ptf" secondAttribute="trailing" constant="30" id="4mh-Qf-ceX"/>
+                            <constraint firstItem="L8R-hK-EM4" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="8AB-jh-rzw"/>
+                            <constraint firstItem="tg2-UH-Ptf" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="9MZ-tF-MBx"/>
+                            <constraint firstItem="tg2-UH-Ptf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="15" id="Agn-Df-ES3"/>
+                            <constraint firstItem="bfo-OB-4sg" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="JMg-Rz-KCh"/>
+                            <constraint firstItem="I9r-ij-CSN" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="Msa-T2-8Mn"/>
+                            <constraint firstItem="L8R-hK-EM4" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="RSX-yh-dQG"/>
+                            <constraint firstItem="vbw-RF-z9c" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="a0i-dJ-Qkq"/>
+                            <constraint firstItem="L8R-hK-EM4" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="100" id="bFP-Xg-xGq"/>
+                            <constraint firstItem="bfo-OB-4sg" firstAttribute="leading" secondItem="vbw-RF-z9c" secondAttribute="trailing" constant="16" id="yvF-io-JMw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelBtn" destination="bfo-OB-4sg" id="Pg5-S2-jO8"/>
+                        <outlet property="chartView" destination="L8R-hK-EM4" id="QAt-dC-hBy"/>
+                        <outlet property="saveBtn" destination="vbw-RF-z9c" id="WQP-W3-bF0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-104.34782608695653" y="-14.0625"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
