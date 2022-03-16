@@ -12,7 +12,7 @@ open class DrawChartView: CombinedChartView {
     
     public private(set) var valuePoints: (CGPoint, CGPoint) = (.zero, .zero)
     
-    private var inDrawMode = false
+    private(set) var inDrawMode = false
     private var touchOriginValuePoint: CGPoint = .zero
     private var drawBoard: DrawLineBoard = .init()
     
@@ -22,6 +22,7 @@ open class DrawChartView: CombinedChartView {
     open override func initialize() {
         super.initialize()
         doubleTapToZoomEnabled = false
+        scaleYEnabled = false
         
         addSubview(drawBoard)
         drawBoard.backgroundColor = .clear
@@ -50,9 +51,9 @@ open class DrawChartView: CombinedChartView {
     public func set(inDrawMode: Bool) {
         self.inDrawMode = inDrawMode
         if inDrawMode == true {
-            pinchZoomEnabled = false
+            scaleXEnabled = false
         } else {
-            pinchZoomEnabled = true
+            scaleXEnabled = true
         }
     }
     
@@ -130,7 +131,7 @@ class DrawLineBoard: UIView {
         super.draw(rect)
         guard let context = UIGraphicsGetCurrentContext() else {return}
         context.saveGState()
-        context.setLineWidth(1)
+        context.setLineWidth(2)
         context.setLineCap(.butt)
         context.setStrokeColor(UIColor.white.cgColor)
         context.strokeLineSegments(between: [points.0, points.1])

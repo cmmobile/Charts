@@ -22,8 +22,7 @@ public class DrawChartRenderer: BarLineScatterCandleBubbleRenderer {
     
     public
     override func drawData(context: CGContext) {
-        guard let dataProvider = dataProvider,
-              let provider = provider else {return}
+        guard let dataProvider = dataProvider else {return}
         let data = dataProvider.drawData
         for set in data.dataSets {
             draw(context: context, set)
@@ -90,7 +89,7 @@ open class DrawChartDataSet: CustomStringConvertible {
     var startPoint: CGPoint
     var endPoint: CGPoint
     
-    var lineWidth: CGFloat = 1
+    public var lineWidth: CGFloat = 1
     var axisDependency: YAxis.AxisDependency = .left
     var color: UIColor = .white
     
