@@ -10,10 +10,11 @@ import CoreGraphics
 
 open class DrawChartView: CombinedChartView {
     
-    public private(set) var valuePoints: (CGPoint, CGPoint) = (.zero, .zero)
+    public private(set) var drawDataSet: DrawChartDataSet = .init(start: .zero, end: .zero)
     
-    private(set) var inDrawMode = false
+    private(set) var drawMode: Mode = .none
     private var touchOriginValuePoint: CGPoint = .zero
+    private var touchOriginPoint: CGPoint = .zero
     private var drawBoard: DrawLineBoard = .init()
     
     private var drawValuePoint: CGPoint = .zero
@@ -32,36 +33,65 @@ open class DrawChartView: CombinedChartView {
             .forEach {$0.isActive = true}
     }
     
-    public func drawClear() {
-        drawBoard.points.0 = .zero
-        drawBoard.points.1 = .zero
-        drawBoard.setNeedsDisplay()
-    }
-    
-    public func set(lPoint: CGPoint, rPoint: CGPoint) {
-        valuePoints = (lPoint, rPoint)
-        
+    public func set(drawDataSet: DrawChartDataSet) {
+        self.drawDataSet = drawDataSet
         let trans = getTransformer(forAxis: .left)
         let valueToPixelMatrix = trans.valueToPixelMatrix
-        drawBoard.points.0 = lPoint.applying(valueToPixelMatrix)
-        drawBoard.points.1 = rPoint.applying(valueToPixelMatrix)
+        drawValuePoint = drawDataSet.startPoint
+        anchorValuePoint = drawDataSet.endPoint
+        drawBoard.points.0 = drawDataSet.startPoint.applying(valueToPixelMatrix)
+        drawBoard.highlightPoint = drawValuePoint.applying(valueToPixelMatrix)
+        drawBoard.points.1 = drawDataSet.endPoint.applying(valueToPixelMatrix)
+        drawBoard.isDrawing = true
         drawBoard.setNeedsDisplay()
     }
     
-    public func set(inDrawMode: Bool) {
-        self.inDrawMode = inDrawMode
-        if inDrawMode == true {
+    public func startDraw() {
+        update(mode: .drawing)
+        drawMode = .drawing
+        scaleXEnabled = false
+    }
+    
+    public func closeDraw() {
+        update(mode: .none)
+        drawMode = .none
+        scaleXEnabled = true
+        drawClear()
+    }
+    
+    private func update(mode: Mode) {
+        drawMode = mode
+        switch mode {
+        case .drawing:
             scaleXEnabled = false
-        } else {
+        case .none:
             scaleXEnabled = true
         }
     }
     
+    private func drawClear() {
+        drawBoard.points.0 = .zero
+        drawBoard.points.1 = .zero
+        drawBoard.isDrawing = false
+        drawBoard.setNeedsDisplay()
+    }
+    
+    override func tapGestureRecognized(_ recognizer: NSUITapGestureRecognizer) {
+        switch drawMode {
+        case .none:
+            super.tapGestureRecognized(recognizer)
+        case .drawing:
+            let point = recognizer.location(in: self)
+            setAnchorPoint(touchPoint: point)
+        }
+    }
+    
     override func panGestureRecognized(_ recognizer: NSUIPanGestureRecognizer) {
-        if inDrawMode == true {
-            draw(recognizer)
-        } else {
+        switch drawMode {
+        case .none:
             super.panGestureRecognized(recognizer)
+        case .drawing:
+            draw(recognizer)
         }
     }
     
@@ -72,16 +102,16 @@ open class DrawChartView: CombinedChartView {
         case .began:
             let point = recognizer.location(in: self)
             touchOriginValuePoint = trans.valueForTouchPoint(point)
-            setAnchorPoint(x: touchOriginValuePoint.x, y: touchOriginValuePoint.y)
+            touchOriginPoint = point
         case .changed:
             let point = recognizer.location(in: self)
             let valuePoint = trans.valueForTouchPoint(point)
             let diffX = touchOriginValuePoint.x - valuePoint.x
             let diffY = touchOriginValuePoint.y - valuePoint.y
             let x = drawValuePoint.x - diffX
-            
             let newPoint: CGPoint = .init(x: round(x), y: drawValuePoint.y - diffY)
             drawBoard.points.0 = newPoint.applying(valueToPixelMatrix)
+            drawBoard.highlightPoint = newPoint.applying(valueToPixelMatrix)
             drawBoard.points.1 = anchorValuePoint.applying(valueToPixelMatrix)
             drawBoard.setNeedsDisplay()
         case .ended, .cancelled:
@@ -90,8 +120,15 @@ open class DrawChartView: CombinedChartView {
             let diffX = touchOriginValuePoint.x - valuePoint.x
             let diffY = touchOriginValuePoint.y - valuePoint.y
             let x = drawValuePoint.x - diffX
+            let newPoint: CGPoint = .init(x: round(x), y: drawValuePoint.y - diffY)
+            drawBoard.points.0 = newPoint.applying(valueToPixelMatrix)
+            drawBoard.highlightPoint = newPoint.applying(valueToPixelMatrix)
+            drawBoard.points.1 = anchorValuePoint.applying(valueToPixelMatrix)
+            drawBoard.setNeedsDisplay()
+            
             drawValuePoint = .init(x: round(x), y: drawValuePoint.y - diffY)
-            valuePoints = (drawValuePoint, anchorValuePoint)
+            drawDataSet.startPoint = drawValuePoint
+            drawDataSet.endPoint = anchorValuePoint
         default:
             break
         }
@@ -99,16 +136,38 @@ open class DrawChartView: CombinedChartView {
     
     // MARK: - Tool
     
-    private func setAnchorPoint(x: CGFloat, y: CGFloat) {
-        let distance0 = abs(valuePoints.0.x - x)
-        let distance1 = abs(valuePoints.1.x - x)
-        if distance0 < distance1 {
-            drawValuePoint = valuePoints.0
-            anchorValuePoint = valuePoints.1
-        } else {
-            drawValuePoint = valuePoints.1
-            anchorValuePoint = valuePoints.0
+    private func setAnchorPoint(touchPoint: CGPoint) {
+        let trans = getTransformer(forAxis: .left)
+        let valueToPixelMatrix = trans.valueToPixelMatrix
+        let p0 = drawDataSet.startPoint.applying(valueToPixelMatrix)
+        let p1 = drawDataSet.endPoint.applying(valueToPixelMatrix)
+        func xDistance(_ p: CGPoint, _ rP: CGPoint) -> CGFloat {
+            return abs(p.x - rP.x)
         }
+        func yDistance(_ p: CGPoint, _ rP: CGPoint) -> CGFloat {
+            return abs(p.y - rP.y)
+        }
+        let distance0 = xDistance(p0, touchPoint)
+        let distance1 = xDistance(p1, touchPoint)
+        if distance0 < distance1 {
+            drawValuePoint = drawDataSet.startPoint
+            anchorValuePoint = drawDataSet.endPoint
+        } else if distance0 > distance1 {
+            drawValuePoint = drawDataSet.endPoint
+            anchorValuePoint = drawDataSet.startPoint
+        } else {
+            let distance0 = yDistance(p0, touchPoint)
+            let distance1 = yDistance(p1, touchPoint)
+            if distance0 < distance1 {
+                drawValuePoint = drawDataSet.startPoint
+                anchorValuePoint = drawDataSet.endPoint
+            } else {
+                drawValuePoint = drawDataSet.endPoint
+                anchorValuePoint = drawDataSet.startPoint
+            }
+        }
+        drawBoard.highlightPoint = drawValuePoint.applying(valueToPixelMatrix)
+        drawBoard.setNeedsDisplay()
     }
     
     private func getFillUpConstraint(subView: UIView, superView: UIView) -> [NSLayoutConstraint] {
@@ -121,20 +180,57 @@ open class DrawChartView: CombinedChartView {
         return constraints
     }
     
+    enum Mode {
+        case drawing
+        case none
+    }
+    
 }
 
 class DrawLineBoard: UIView {
     
+    var isDrawing = false
     var points: (CGPoint, CGPoint) = (.zero, .zero)
+    var highlightPoint: CGPoint = .zero
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
+        guard isDrawing == true else {return}
         guard let context = UIGraphicsGetCurrentContext() else {return}
+        let lineColor = UIColor.white
+        let pointArray = [points.0, points.1]
         context.saveGState()
         context.setLineWidth(2)
         context.setLineCap(.butt)
         context.setStrokeColor(UIColor.white.cgColor)
-        context.strokeLineSegments(between: [points.0, points.1])
+        context.strokeLineSegments(between: pointArray)
+        
+        var circleRadius: CGFloat
+        var circleDiameter: CGFloat
+        circleRadius = 7
+        circleDiameter = circleRadius * 2.0
+        let point = highlightPoint
+        var rect: CGRect = .zero
+        rect.origin.x = point.x - circleRadius
+        rect.origin.y = point.y - circleRadius
+        rect.size.width = circleDiameter
+        rect.size.height = circleDiameter
+        let color = lineColor.withAlphaComponent(0.6)
+        context.setFillColor(color.cgColor)
+        context.fillEllipse(in: rect)
+        
+        circleRadius = 3
+        circleDiameter = circleRadius * 2.0
+        for point in pointArray {
+            var rect: CGRect = .zero
+            rect.origin.x = point.x - circleRadius
+            rect.origin.y = point.y - circleRadius
+            rect.size.width = circleDiameter
+            rect.size.height = circleDiameter
+            context.setFillColor(lineColor.cgColor)
+            context.fillEllipse(in: rect)
+        }
+        
         context.restoreGState()
     }
     

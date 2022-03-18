@@ -14,6 +14,7 @@ class CMLineChart2ViewController: UIViewController {
     @IBOutlet weak var chartView: DrawChartView!
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var msgLabel: UILabel!
     
     let klineInfos = KlineData.demoArray
     
@@ -83,23 +84,23 @@ class CMLineChart2ViewController: UIViewController {
         guard klineInfos.indices.contains(sIndex) && klineInfos.indices.contains(eIndex) else {return}
         let start: CGPoint = .init(x: Double(sIndex), y: klineInfos[sIndex].c)
         let end: CGPoint = .init(x: Double(eIndex), y: klineInfos[eIndex].c)
-        chartView.set(lPoint: start, rPoint: end)
-        chartView.set(inDrawMode: true)
+        chartView.set(drawDataSet: .init(start: start, end: end))
+        chartView.startDraw()
     }
     
     @IBAction func saveAction(_ sender: Any) {
-        print("DEV chartView.valuePoints \(chartView.valuePoints)")
-        let valuePoints = chartView.valuePoints
-        chartView.drawClear()
+        let p0 = chartView.drawDataSet.startPoint
+        let p1 = chartView.drawDataSet.endPoint
+        chartView.closeDraw()
         saveBtn.isHidden = true
         cancelBtn.isHidden = true
         
-        dataSets.append(.init(start: valuePoints.0, end: valuePoints.1))
+        dataSets.append(.init(start: p0, end: p1))
         chartView.notifyDataSetChanged()
     }
     
     @IBAction func cacnelAction(_ sender: Any) {
-        chartView.drawClear()
+        chartView.closeDraw()
         saveBtn.isHidden = true
         cancelBtn.isHidden = true
     }

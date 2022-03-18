@@ -86,12 +86,12 @@ open class DrawChartData {
 
 open class DrawChartDataSet: CustomStringConvertible {
     
-    var startPoint: CGPoint
-    var endPoint: CGPoint
+    public var startPoint: CGPoint
+    public var endPoint: CGPoint
     
     public var lineWidth: CGFloat = 1
     var axisDependency: YAxis.AxisDependency = .left
-    var color: UIColor = .white
+    public var color: UIColor = .white
     
     public var description: String {
         "start: \(startPoint) end: \(endPoint)"

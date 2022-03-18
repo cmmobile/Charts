@@ -52,6 +52,12 @@
                                     <action selector="cacnelAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Vpy-gh-zN9"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="訊息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jg5-iq-vK8">
+                                <rect key="frame" x="20" y="115" width="35" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -61,17 +67,20 @@
                             <constraint firstItem="L8R-hK-EM4" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="8AB-jh-rzw"/>
                             <constraint firstItem="tg2-UH-Ptf" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="9MZ-tF-MBx"/>
                             <constraint firstItem="tg2-UH-Ptf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="15" id="Agn-Df-ES3"/>
+                            <constraint firstItem="L8R-hK-EM4" firstAttribute="top" secondItem="jg5-iq-vK8" secondAttribute="bottom" constant="8" symbolic="YES" id="J2a-CF-IzN"/>
                             <constraint firstItem="bfo-OB-4sg" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="JMg-Rz-KCh"/>
                             <constraint firstItem="I9r-ij-CSN" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="Msa-T2-8Mn"/>
                             <constraint firstItem="L8R-hK-EM4" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="RSX-yh-dQG"/>
                             <constraint firstItem="vbw-RF-z9c" firstAttribute="top" secondItem="L8R-hK-EM4" secondAttribute="bottom" constant="15" id="a0i-dJ-Qkq"/>
                             <constraint firstItem="L8R-hK-EM4" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="100" id="bFP-Xg-xGq"/>
+                            <constraint firstItem="jg5-iq-vK8" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="lu9-hz-if7"/>
                             <constraint firstItem="bfo-OB-4sg" firstAttribute="leading" secondItem="vbw-RF-z9c" secondAttribute="trailing" constant="16" id="yvF-io-JMw"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cancelBtn" destination="bfo-OB-4sg" id="Pg5-S2-jO8"/>
                         <outlet property="chartView" destination="L8R-hK-EM4" id="QAt-dC-hBy"/>
+                        <outlet property="msgLabel" destination="jg5-iq-vK8" id="zn0-Fv-BOG"/>
                         <outlet property="saveBtn" destination="vbw-RF-z9c" id="WQP-W3-bF0"/>
                     </connections>
                 </viewController>
