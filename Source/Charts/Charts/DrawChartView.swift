@@ -12,7 +12,7 @@ open class DrawChartView: CombinedChartView {
     
     public private(set) var drawDataSet: DrawChartDataSet = .init(start: .zero, end: .zero)
     
-    private(set) var drawMode: Mode = .none
+    private var drawMode: Mode = .none
     private var touchOriginValuePoint: CGPoint = .zero
     private var touchOriginPoint: CGPoint = .zero
     private var drawBoard: DrawLineBoard = .init()
@@ -44,22 +44,25 @@ open class DrawChartView: CombinedChartView {
         drawBoard.points.1 = drawDataSet.endPoint.applying(valueToPixelMatrix)
         drawBoard.isDrawing = true
         drawBoard.setNeedsDisplay()
+        drawHighlight(valuePoint: drawDataSet.startPoint)
     }
     
     public func startDraw() {
         update(mode: .drawing)
         drawMode = .drawing
-        scaleXEnabled = false
     }
     
     public func closeDraw() {
         update(mode: .none)
         drawMode = .none
-        scaleXEnabled = true
         drawClear()
     }
     
-    private func update(mode: Mode) {
+    open func drawHighlight(valuePoint: CGPoint) {
+        //  給子類別override
+    }
+    
+    open func update(mode: Mode) {
         drawMode = mode
         switch mode {
         case .drawing:
@@ -83,6 +86,7 @@ open class DrawChartView: CombinedChartView {
         case .drawing:
             let point = recognizer.location(in: self)
             setAnchorPoint(touchPoint: point)
+            drawHighlight(valuePoint: drawValuePoint)
         }
     }
     
@@ -110,6 +114,7 @@ open class DrawChartView: CombinedChartView {
             let diffY = touchOriginValuePoint.y - valuePoint.y
             let x = drawValuePoint.x - diffX
             let newPoint: CGPoint = .init(x: round(x), y: drawValuePoint.y - diffY)
+            drawHighlight(valuePoint: newPoint)
             drawBoard.points.0 = newPoint.applying(valueToPixelMatrix)
             drawBoard.highlightPoint = newPoint.applying(valueToPixelMatrix)
             drawBoard.points.1 = anchorValuePoint.applying(valueToPixelMatrix)
@@ -126,7 +131,8 @@ open class DrawChartView: CombinedChartView {
             drawBoard.points.1 = anchorValuePoint.applying(valueToPixelMatrix)
             drawBoard.setNeedsDisplay()
             
-            drawValuePoint = .init(x: round(x), y: drawValuePoint.y - diffY)
+            drawValuePoint = newPoint
+            drawHighlight(valuePoint: newPoint)
             drawDataSet.startPoint = drawValuePoint
             drawDataSet.endPoint = anchorValuePoint
         default:
@@ -136,11 +142,17 @@ open class DrawChartView: CombinedChartView {
     
     // MARK: - Tool
     
+    private func toValuePoint(_ pixelPoint: CGPoint) -> CGPoint {
+        let trans = getTransformer(forAxis: .left)
+        let pixelToValueMatrix = trans.pixelToValueMatrix
+        return pixelPoint.applying(pixelToValueMatrix)
+    }
+    
     private func setAnchorPoint(touchPoint: CGPoint) {
         let trans = getTransformer(forAxis: .left)
         let valueToPixelMatrix = trans.valueToPixelMatrix
-        let p0 = drawDataSet.startPoint.applying(valueToPixelMatrix)
-        let p1 = drawDataSet.endPoint.applying(valueToPixelMatrix)
+        let p0 = drawValuePoint.applying(valueToPixelMatrix)
+        let p1 = anchorValuePoint.applying(valueToPixelMatrix)
         func xDistance(_ p: CGPoint, _ rP: CGPoint) -> CGFloat {
             return abs(p.x - rP.x)
         }
@@ -150,20 +162,14 @@ open class DrawChartView: CombinedChartView {
         let distance0 = xDistance(p0, touchPoint)
         let distance1 = xDistance(p1, touchPoint)
         if distance0 < distance1 {
-            drawValuePoint = drawDataSet.startPoint
-            anchorValuePoint = drawDataSet.endPoint
         } else if distance0 > distance1 {
-            drawValuePoint = drawDataSet.endPoint
-            anchorValuePoint = drawDataSet.startPoint
+            swap(&drawValuePoint, &anchorValuePoint)
         } else {
             let distance0 = yDistance(p0, touchPoint)
             let distance1 = yDistance(p1, touchPoint)
             if distance0 < distance1 {
-                drawValuePoint = drawDataSet.startPoint
-                anchorValuePoint = drawDataSet.endPoint
             } else {
-                drawValuePoint = drawDataSet.endPoint
-                anchorValuePoint = drawDataSet.startPoint
+                swap(&drawValuePoint, &anchorValuePoint)
             }
         }
         drawBoard.highlightPoint = drawValuePoint.applying(valueToPixelMatrix)
@@ -180,7 +186,7 @@ open class DrawChartView: CombinedChartView {
         return constraints
     }
     
-    enum Mode {
+    public enum Mode {
         case drawing
         case none
     }
