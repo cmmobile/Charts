@@ -12,7 +12,7 @@ open class DrawChartView: CombinedChartView {
     
     public private(set) var drawDataSet: DrawChartDataSet = .init(start: .zero, end: .zero)
     
-    private var drawMode: Mode = .none
+    public private(set) var drawMode: Mode = .none
     private var touchOriginValuePoint: CGPoint = .zero
     private var touchOriginPoint: CGPoint = .zero
     private var drawBoard: DrawLineBoard = .init()
@@ -33,6 +33,13 @@ open class DrawChartView: CombinedChartView {
             .forEach {$0.isActive = true}
     }
     
+    open override func notifyDataSetChanged() {
+        super.notifyDataSetChanged()
+        if drawMode == .drawing {
+            set(drawDataSet: drawDataSet)
+        }
+    }
+    
     public func set(drawDataSet: DrawChartDataSet) {
         self.drawDataSet = drawDataSet
         let trans = getTransformer(forAxis: .left)
@@ -42,23 +49,17 @@ open class DrawChartView: CombinedChartView {
         drawBoard.points.0 = drawDataSet.startPoint.applying(valueToPixelMatrix)
         drawBoard.highlightPoint = drawValuePoint.applying(valueToPixelMatrix)
         drawBoard.points.1 = drawDataSet.endPoint.applying(valueToPixelMatrix)
+        drawBoard.lineWidth = drawDataSet.lineWidth
         drawBoard.isDrawing = true
         drawBoard.setNeedsDisplay()
         drawHighlight(valuePoint: drawDataSet.startPoint)
     }
     
-    public func startDraw() {
-        update(mode: .drawing)
-        drawMode = .drawing
-    }
-    
-    public func closeDraw() {
-        update(mode: .none)
-        drawMode = .none
-        drawClear()
-    }
-    
     open func drawHighlight(valuePoint: CGPoint) {
+        //  給子類別override
+    }
+    
+    open func tapPoint(point: CGPoint) {
         //  給子類別override
     }
     
@@ -69,6 +70,7 @@ open class DrawChartView: CombinedChartView {
             scaleXEnabled = false
         case .none:
             scaleXEnabled = true
+            drawClear()
         }
     }
     
@@ -80,14 +82,15 @@ open class DrawChartView: CombinedChartView {
     }
     
     override func tapGestureRecognized(_ recognizer: NSUITapGestureRecognizer) {
+        let point = recognizer.location(in: self)
         switch drawMode {
         case .none:
             super.tapGestureRecognized(recognizer)
         case .drawing:
-            let point = recognizer.location(in: self)
             setAnchorPoint(touchPoint: point)
             drawHighlight(valuePoint: drawValuePoint)
         }
+        tapPoint(point: point)
     }
     
     override func panGestureRecognized(_ recognizer: NSUIPanGestureRecognizer) {
@@ -197,6 +200,7 @@ class DrawLineBoard: UIView {
     
     var isDrawing = false
     var points: (CGPoint, CGPoint) = (.zero, .zero)
+    var lineWidth: CGFloat = 1
     var highlightPoint: CGPoint = .zero
     
     override func draw(_ rect: CGRect) {
@@ -206,7 +210,7 @@ class DrawLineBoard: UIView {
         let lineColor = UIColor.white
         let pointArray = [points.0, points.1]
         context.saveGState()
-        context.setLineWidth(2)
+        context.setLineWidth(lineWidth)
         context.setLineCap(.butt)
         context.setStrokeColor(UIColor.white.cgColor)
         context.strokeLineSegments(between: pointArray)

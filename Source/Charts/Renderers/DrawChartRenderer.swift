@@ -33,7 +33,7 @@ public class DrawChartRenderer: BarLineScatterCandleBubbleRenderer {
         guard let provider = provider else {return}
         context.saveGState()
         context.setLineWidth(dataSet.lineWidth)
-        context.setLineCap(.butt)
+        context.setLineCap(.round)
         
         let trans = provider.getTransformer(forAxis: dataSet.axisDependency)
         let valueToPixelMatrix = trans.valueToPixelMatrix
