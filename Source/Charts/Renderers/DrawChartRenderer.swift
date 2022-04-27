@@ -92,6 +92,7 @@ open class DrawChartDataSet: CustomStringConvertible {
     public var lineWidth: CGFloat = 1
     var axisDependency: YAxis.AxisDependency = .left
     public var color: UIColor = .white
+    public var drawType: DrawType = .straight
     
     public var description: String {
         "start: \(startPoint) end: \(endPoint)"
@@ -102,8 +103,9 @@ open class DrawChartDataSet: CustomStringConvertible {
         endPoint = end
     }
     
-    enum DrawType {
+    public enum DrawType {
         case straight
+        case horizontal
     }
     
 }
