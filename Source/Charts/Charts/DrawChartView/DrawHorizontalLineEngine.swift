@@ -11,7 +11,6 @@ import UIKit
 
 class DrawHorizontalLineEngine: DrawChartEngine {
     
-    private var touchOriginValuePoint: CGPoint = .zero
     private var touchOriginPoint: CGPoint = .zero
     var drawValuePoint: CGPoint = .zero
     var drawValue2Point: CGPoint = .zero
@@ -42,18 +41,21 @@ class DrawHorizontalLineEngine: DrawChartEngine {
         guard let chart = chart else {return}
         let trans = chart.getTransformer(forAxis: .left)
         let valueToPixelMatrix = trans.valueToPixelMatrix
+        let pixelToValueMatrix = trans.pixelToValueMatrix
         let point = recognizer.location(in: chart)
         let drawBoard = chart.drawBoard
         switch recognizer.state {
         case .began:
-            touchOriginValuePoint = trans.valueForTouchPoint(point)
             touchOriginPoint = point
         case .changed:
-            let valuePoint = trans.valueForTouchPoint(point)
-            let diffX = touchOriginValuePoint.x - valuePoint.x
-            let diffY = touchOriginValuePoint.y - valuePoint.y
-            let x = drawValuePoint.x - diffX
-            let newPoint: CGPoint = .init(x: round(x), y: drawValuePoint.y - diffY)
+            let diffX = touchOriginPoint.x - point.x
+            let diffY = touchOriginPoint.y - point.y
+            let diffPt: CGPoint = .init(x: diffX, y: diffY)
+            let diffValuePt: CGPoint = .init(x: pixelToValueMatrix.a * diffPt.x, y: pixelToValueMatrix.d * diffPt.y)
+            var x = drawValuePoint.x - diffValuePt.x
+            x = round(x)
+            let y = drawValuePoint.y - diffValuePt.y
+            let newPoint: CGPoint = .init(x: x, y: y)
             let newPoint2: CGPoint = .init(x: round(drawValue2Point.x), y: newPoint.y)
             chart.drawHighlight(valuePoint: newPoint)
             drawBoard.points.0 = newPoint.applying(valueToPixelMatrix)
@@ -61,11 +63,14 @@ class DrawHorizontalLineEngine: DrawChartEngine {
             drawBoard.points.1 = newPoint2.applying(valueToPixelMatrix)
             drawBoard.setNeedsDisplay()
         case .ended, .cancelled:
-            let valuePoint = trans.valueForTouchPoint(point)
-            let diffX = touchOriginValuePoint.x - valuePoint.x
-            let diffY = touchOriginValuePoint.y - valuePoint.y
-            let x = drawValuePoint.x - diffX
-            let newPoint: CGPoint = .init(x: round(x), y: drawValuePoint.y - diffY)
+            let diffX = touchOriginPoint.x - point.x
+            let diffY = touchOriginPoint.y - point.y
+            let diffPt: CGPoint = .init(x: diffX, y: diffY)
+            let diffValuePt: CGPoint = .init(x: pixelToValueMatrix.a * diffPt.x, y: pixelToValueMatrix.d * diffPt.y)
+            var x = drawValuePoint.x - diffValuePt.x
+            x = round(x)
+            let y = drawValuePoint.y - diffValuePt.y
+            let newPoint: CGPoint = .init(x: x, y: y)
             let newPoint2: CGPoint = .init(x: round(drawValue2Point.x), y: newPoint.y)
             drawBoard.points.0 = newPoint.applying(valueToPixelMatrix)
             drawBoard.highlightPoint = newPoint.applying(valueToPixelMatrix)
