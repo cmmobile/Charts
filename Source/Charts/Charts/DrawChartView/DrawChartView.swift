@@ -92,11 +92,11 @@ open class DrawChartView: CombinedChartView {
         case .none:
             super.panGestureRecognized(recognizer)
         case .drawing:
-            draw(recognizer)
+            draw(recognizer: recognizer)
         }
     }
     
-    private func draw(_ recognizer: NSUIPanGestureRecognizer) {
+    open func draw(recognizer: NSUIPanGestureRecognizer) {
         drawEngine?.draw(recognizer)
     }
     
