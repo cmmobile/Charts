@@ -47,17 +47,19 @@ class DrawLineEngine: DrawChartEngine {
         switch recognizer.state {
         case .began:
             touchOriginPoint = point
+            print("DEV chart.highestVisibleX \(chart.highestVisibleX)")
+            print("DEV chart.lowestVisibleX \(chart.lowestVisibleX)")
         case .changed:
             let diffX = touchOriginPoint.x - point.x
             let diffY = touchOriginPoint.y - point.y
             let diffPt: CGPoint = .init(x: diffX, y: diffY)
             let diffValuePt: CGPoint = .init(x: pixelToValueMatrix.a * diffPt.x, y: pixelToValueMatrix.d * diffPt.y)
             var x = drawValuePoint.x - diffValuePt.x
-            if x > chart.highestVisibleX {
-                x = chart.highestVisibleX
+            if x > (chart.highestVisibleX - 0.5) {
+                x = (chart.highestVisibleX - 0.5)
             }
-            if x < chart.lowestVisibleX {
-                x = chart.lowestVisibleX
+            if x < (chart.lowestVisibleX + 0.5) {
+                x = (chart.lowestVisibleX + 0.5)
             }
             x = round(x)
             let y = drawValuePoint.y - diffValuePt.y
@@ -74,11 +76,11 @@ class DrawLineEngine: DrawChartEngine {
             let diffPt: CGPoint = .init(x: diffX, y: diffY)
             let diffValuePt: CGPoint = .init(x: pixelToValueMatrix.a * diffPt.x, y: pixelToValueMatrix.d * diffPt.y)
             var x = drawValuePoint.x - diffValuePt.x
-            if x > chart.highestVisibleX {
-                x = chart.highestVisibleX
+            if x > (chart.highestVisibleX - 0.5) {
+                x = (chart.highestVisibleX - 0.5)
             }
-            if x < chart.lowestVisibleX {
-                x = chart.lowestVisibleX
+            if x < (chart.lowestVisibleX + 0.5) {
+                x = (chart.lowestVisibleX + 0.5)
             }
             x = round(x)
             let y = drawValuePoint.y - diffValuePt.y
