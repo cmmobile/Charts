@@ -53,6 +53,12 @@ class DrawLineEngine: DrawChartEngine {
             let diffPt: CGPoint = .init(x: diffX, y: diffY)
             let diffValuePt: CGPoint = .init(x: pixelToValueMatrix.a * diffPt.x, y: pixelToValueMatrix.d * diffPt.y)
             var x = drawValuePoint.x - diffValuePt.x
+            if x > chart.highestVisibleX {
+                x = chart.highestVisibleX
+            }
+            if x < chart.lowestVisibleX {
+                x = chart.lowestVisibleX
+            }
             x = round(x)
             let y = drawValuePoint.y - diffValuePt.y
             let newValuePoint: CGPoint = .init(x: x, y: y)
@@ -68,6 +74,12 @@ class DrawLineEngine: DrawChartEngine {
             let diffPt: CGPoint = .init(x: diffX, y: diffY)
             let diffValuePt: CGPoint = .init(x: pixelToValueMatrix.a * diffPt.x, y: pixelToValueMatrix.d * diffPt.y)
             var x = drawValuePoint.x - diffValuePt.x
+            if x > chart.highestVisibleX {
+                x = chart.highestVisibleX
+            }
+            if x < chart.lowestVisibleX {
+                x = chart.lowestVisibleX
+            }
             x = round(x)
             let y = drawValuePoint.y - diffValuePt.y
             let newPoint: CGPoint = .init(x: x, y: y)
