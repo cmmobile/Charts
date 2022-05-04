@@ -47,8 +47,6 @@ class DrawLineEngine: DrawChartEngine {
         switch recognizer.state {
         case .began:
             touchOriginPoint = point
-            print("DEV chart.highestVisibleX \(chart.highestVisibleX)")
-            print("DEV chart.lowestVisibleX \(chart.lowestVisibleX)")
         case .changed:
             let diffX = touchOriginPoint.x - point.x
             let diffY = touchOriginPoint.y - point.y
