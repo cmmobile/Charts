@@ -104,6 +104,9 @@
 		9A26C8DB1F87B01700367599 /* DataApproximator+N.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26C8DA1F87B01700367599 /* DataApproximator+N.swift */; };
 		9C91C151608E2D6E19B1EAD1 /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F099502DA50C56204E7B744 /* Range.swift */; };
 		9D7BCCC627C738F200BF7388 /* StockTrendLineChartDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7BCCC527C738F200BF7388 /* StockTrendLineChartDataSet.swift */; };
+		9DD50D5A27DB49BD00D0648B /* DrawChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD50D5927DB49BD00D0648B /* DrawChartView.swift */; };
+		9DFD66FD27DAED9E007E1532 /* CustomCombinedChartRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFD66FC27DAED9E007E1532 /* CustomCombinedChartRenderer.swift */; };
+		9DFD66FF27DAEF0C007E1532 /* DrawChartRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFD66FE27DAEF0C007E1532 /* DrawChartRenderer.swift */; };
 		9F760570BCECB0BF5727AF90 /* BarLineChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C6D3723C4E001B119CA0C8 /* BarLineChartViewBase.swift */; };
 		A40ACF0CCE96EEE104B0463D /* IValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAA8AA30C377D54D22A577A /* IValueFormatter.swift */; };
 		A692D8BDE42717F69DB790BE /* HorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6021C9E424C36116AEA78CC9 /* HorizontalBarChartView.swift */; };
@@ -271,6 +274,9 @@
 		9D7184C8A5A60A3522AB9B05 /* BarChartDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BarChartDataProvider.swift; path = Source/Charts/Interfaces/BarChartDataProvider.swift; sourceTree = "<group>"; };
 		9D7BCCC527C738F200BF7388 /* StockTrendLineChartDataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StockTrendLineChartDataSet.swift; path = Source/Charts/Data/Implementations/Standard/StockTrendLineChartDataSet.swift; sourceTree = "<group>"; };
 		9DCD13D558BA177D5952AD66 /* PieChartView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PieChartView.swift; path = Source/Charts/Charts/PieChartView.swift; sourceTree = "<group>"; };
+		9DD50D5927DB49BD00D0648B /* DrawChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawChartView.swift; path = Source/Charts/Charts/DrawChartView.swift; sourceTree = "<group>"; };
+		9DFD66FC27DAED9E007E1532 /* CustomCombinedChartRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomCombinedChartRenderer.swift; path = Source/Charts/Renderers/CustomCombinedChartRenderer.swift; sourceTree = "<group>"; };
+		9DFD66FE27DAEF0C007E1532 /* DrawChartRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawChartRenderer.swift; path = Source/Charts/Renderers/DrawChartRenderer.swift; sourceTree = "<group>"; };
 		9E7C673B9ED4340F550A9283 /* LegendEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LegendEntry.swift; path = Source/Charts/Components/LegendEntry.swift; sourceTree = "<group>"; };
 		A140F644332704916947B58C /* CombinedChartDataProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CombinedChartDataProvider.swift; path = Source/Charts/Interfaces/CombinedChartDataProvider.swift; sourceTree = "<group>"; };
 		A4FB5E3761EF8B4D1E1E1014 /* PieChartDataSet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PieChartDataSet.swift; path = Source/Charts/Data/Implementations/Standard/PieChartDataSet.swift; sourceTree = "<group>"; };
@@ -521,6 +527,7 @@
 				BA1A58428DC4780BAB4EAADC /* CandleStickChartView.swift */,
 				30EFAD7920F76360ADB3B5F5 /* ChartViewBase.swift */,
 				11EF1FE22549E885C8F40738 /* CombinedChartView.swift */,
+				9DD50D5927DB49BD00D0648B /* DrawChartView.swift */,
 				6021C9E424C36116AEA78CC9 /* HorizontalBarChartView.swift */,
 				0619A877C69A95ECCC440A44 /* LineChartView.swift */,
 				9DCD13D558BA177D5952AD66 /* PieChartView.swift */,
@@ -652,6 +659,8 @@
 				BD5C6D20243EC2F19069AACD /* CandleStickChartRenderer.swift */,
 				0216EDC6A1FE272F4EB19FCF /* ChartDataRendererBase.swift */,
 				52265C1B343CCC41AF2300E3 /* CombinedChartRenderer.swift */,
+				9DFD66FC27DAED9E007E1532 /* CustomCombinedChartRenderer.swift */,
+				9DFD66FE27DAEF0C007E1532 /* DrawChartRenderer.swift */,
 				539382766378B702660FDFB2 /* HorizontalBarChartRenderer.swift */,
 				F715DB2C56C9E0615542625B /* LegendRenderer.swift */,
 				0DABDBBCCE6B3620C967F04A /* LineChartRenderer.swift */,
@@ -931,6 +940,7 @@
 				FD37AAC0270F390FFC470A65 /* ChartDataProvider.swift in Sources */,
 				C9F3DC292355FA2F000C3215 /* Platform+Touch Handling.swift in Sources */,
 				65EA404AE098EBCE8D5DE04B /* CombinedChartDataProvider.swift in Sources */,
+				9DFD66FF27DAEF0C007E1532 /* DrawChartRenderer.swift in Sources */,
 				2BA03CEC36BADCF682F1328B /* LineChartDataProvider.swift in Sources */,
 				0511E43EF3FD2CDE7F7F15DB /* ScatterChartDataProvider.swift in Sources */,
 				7EE6EFE70CF4D8B09CAFCD01 /* AnimatedMoveViewJob.swift in Sources */,
@@ -956,6 +966,8 @@
 				69EA073EDF75D49ABE1715D6 /* RadarChartRenderer.swift in Sources */,
 				CEF68F42A5390A73113F3663 /* Renderer.swift in Sources */,
 				796D3E63A37A95FD9D1AB9A1 /* ChevronDownShapeRenderer.swift in Sources */,
+				9DD50D5A27DB49BD00D0648B /* DrawChartView.swift in Sources */,
+				9DFD66FD27DAED9E007E1532 /* CustomCombinedChartRenderer.swift in Sources */,
 				F103D90FC5DEEA0D7BB4407E /* ChevronUpShapeRenderer.swift in Sources */,
 				B85DEB06B4C1AFFC8A0E3295 /* CircleShapeRenderer.swift in Sources */,
 				0529DD51622C8769C1121F90 /* CrossShapeRenderer.swift in Sources */,

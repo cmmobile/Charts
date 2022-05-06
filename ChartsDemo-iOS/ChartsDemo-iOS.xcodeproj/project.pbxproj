@@ -203,6 +203,9 @@
 		9D7BCCBC27C63BB100BF7388 /* CMLineChart1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7BCCBB27C63BB100BF7388 /* CMLineChart1ViewController.swift */; };
 		9D7BCCBE27C63BBC00BF7388 /* CMLineChart1ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D7BCCBD27C63BBC00BF7388 /* CMLineChart1ViewController.storyboard */; };
 		9D7BCCC027C63C2B00BF7388 /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7BCCBF27C63C2B00BF7388 /* Tool.swift */; };
+		9DFD66F727DA04FE007E1532 /* CMLineChart2ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DFD66F427DA04FE007E1532 /* CMLineChart2ViewController.storyboard */; };
+		9DFD66F827DA04FE007E1532 /* CMLineChart2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFD66F627DA04FE007E1532 /* CMLineChart2ViewController.swift */; };
+		9DFD670127DB2756007E1532 /* KlineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFD670027DB2756007E1532 /* KlineData.swift */; };
 		B64D06EB1FB199130067418D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B64D06EA1FB199130067418D /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -416,6 +419,9 @@
 		9D7BCCBB27C63BB100BF7388 /* CMLineChart1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMLineChart1ViewController.swift; sourceTree = "<group>"; };
 		9D7BCCBD27C63BBC00BF7388 /* CMLineChart1ViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CMLineChart1ViewController.storyboard; sourceTree = "<group>"; };
 		9D7BCCBF27C63C2B00BF7388 /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
+		9DFD66F427DA04FE007E1532 /* CMLineChart2ViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CMLineChart2ViewController.storyboard; sourceTree = "<group>"; };
+		9DFD66F627DA04FE007E1532 /* CMLineChart2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMLineChart2ViewController.swift; sourceTree = "<group>"; };
+		9DFD670027DB2756007E1532 /* KlineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlineData.swift; sourceTree = "<group>"; };
 		B64D06EA1FB199130067418D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -714,6 +720,9 @@
 				9D7BCCB927C6393500BF7388 /* CMDemoListViewController.swift */,
 				9D7BCCBB27C63BB100BF7388 /* CMLineChart1ViewController.swift */,
 				9D7BCCBD27C63BBC00BF7388 /* CMLineChart1ViewController.storyboard */,
+				9DFD66F427DA04FE007E1532 /* CMLineChart2ViewController.storyboard */,
+				9DFD66F627DA04FE007E1532 /* CMLineChart2ViewController.swift */,
+				9DFD670027DB2756007E1532 /* KlineData.swift */,
 			);
 			path = CMDemo;
 			sourceTree = "<group>";
@@ -953,6 +962,7 @@
 				9D7BCCA927C637F300BF7388 /* RealmDemosViewController.xib in Resources */,
 				9D7BCCAA27C637F300BF7388 /* PositiveNegativeBarChartViewController.xib in Resources */,
 				9D7BCCAB27C637F300BF7388 /* NegativeStackedBarChartViewController.xib in Resources */,
+				9DFD66F727DA04FE007E1532 /* CMLineChart2ViewController.storyboard in Resources */,
 				9D7BCCAC27C637F300BF7388 /* BubbleChartViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1046,6 +1056,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D7BCCB427C6380500BF7388 /* AppDelegate.swift in Sources */,
+				9DFD670127DB2756007E1532 /* KlineData.swift in Sources */,
 				9D7BCC6C27C637F300BF7388 /* LineChartTimeViewController.swift in Sources */,
 				9D7BCC6D27C637F300BF7388 /* DemoBaseViewController.swift in Sources */,
 				9D7BCC6E27C637F300BF7388 /* DayAxisValueFormatter.swift in Sources */,
@@ -1074,6 +1085,7 @@
 				9D7BCC8327C637F300BF7388 /* MultipleBarChartViewController.swift in Sources */,
 				9D7BCC8427C637F300BF7388 /* CombinedChartViewController.swift in Sources */,
 				9D7BCC8527C637F300BF7388 /* StackedBarChartViewController.swift in Sources */,
+				9DFD66F827DA04FE007E1532 /* CMLineChart2ViewController.swift in Sources */,
 				9D7BCC8627C637F300BF7388 /* BubbleChartViewController.swift in Sources */,
 				9D7BCC8727C637F300BF7388 /* IntAxisValueFormatter.swift in Sources */,
 				9D7BCC8827C637F300BF7388 /* HalfPieChartViewController.swift in Sources */,
