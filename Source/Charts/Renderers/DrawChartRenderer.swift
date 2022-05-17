@@ -90,7 +90,7 @@ open class DrawChartDataSet: CustomStringConvertible {
     public var endPoint: CGPoint
     
     public var lineWidth: CGFloat = 1
-    var axisDependency: YAxis.AxisDependency = .left
+    public var axisDependency: YAxis.AxisDependency = .left
     public var color: UIColor = .white
     public var drawType: DrawType = .straight
     
