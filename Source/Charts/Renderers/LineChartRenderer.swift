@@ -828,8 +828,7 @@ extension LineChartRenderer {
             _lineSegments = [CGPoint](repeating: CGPoint(), count: pointsPerEntryPair)
         }
 
-        let xBounds = _xBounds.dropLast()
-        for j in xBounds {
+        for j in stride(from: _xBounds.min, through: _xBounds.range + _xBounds.min, by: 1)  {
             var e: ChartDataEntry! = dataSet.entryForIndex(j)
             
             if e == nil { continue }
