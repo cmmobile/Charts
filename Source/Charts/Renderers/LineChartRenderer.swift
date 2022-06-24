@@ -828,7 +828,7 @@ extension LineChartRenderer {
             _lineSegments = [CGPoint](repeating: CGPoint(), count: pointsPerEntryPair)
         }
 
-        for j in _xBounds.dropLast() {
+        for j in stride(from: _xBounds.min, through: _xBounds.range + _xBounds.min, by: 1)  {
             var e: ChartDataEntry! = dataSet.entryForIndex(j)
             
             if e == nil { continue }
@@ -838,9 +838,6 @@ extension LineChartRenderer {
             let valueStart = _lineSegments[0]
             let valueEnd: CGPoint
             if j < _xBounds.max {
-                // TODO: remove the check.
-                // With the new XBounds iterator, j is always smaller than _xBounds.max
-                // Keeping this check for a while, if xBounds have no further breaking changes, it should be safe to remove the check
                 e = dataSet.entryForIndex(j + 1)
                 if e == nil { break }
                 valueEnd = CGPoint(x: CGFloat(e.x), y: CGFloat(e.y * phaseY))
