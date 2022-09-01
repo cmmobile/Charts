@@ -14,16 +14,18 @@ public class CustomCombinedChartRenderer: CombinedChartRenderer {
     
     public var otherBackRenderers: [DataRenderer] = []
     public var otherFrontRenderers: [DataRenderer] = []
+    /// 強制使用客製化CreateRenderers
+    public var customCreateRenderer: (() -> ([DataRenderer]?))?
     
     public func swap(type: CombinedChartView.DrawOrder, renderer: @escaping () -> DataRenderer?) {
         renderPresenterDic[type] = renderer
     }
     
-    /// Creates the renderers needed for this combined-renderer in the required order. Also takes the DrawOrder into consideration.
-    /// 這邊必須Override 否則會畫不出圖
-    public override func createRenderers()
-    {
-        
+    public override func createRenderers() {
+        if let customCreate = customCreateRenderer, let renderers = customCreate() {
+            _renderers = renderers
+            return
+        }
         guard let chart = chart else { return }
         var renderers: [DataRenderer] = otherBackRenderers
         
