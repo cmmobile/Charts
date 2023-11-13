@@ -907,6 +907,7 @@ extension LineChartRenderer {
     
     /// fill 股票走勢圖
     private func drawStockTrendFill(context: CGContext, dataSet: ILineChartDataSet, trans: Transformer, bounds: XBounds, upColor: UIColor, downColor: UIColor, refPrice: CGFloat) {
+        guard let dataSet = dataSet as? StockTrendLineChartDataSet else {return}
         guard let filled = try? generateStockTrendFilledPath(
                 dataSet: dataSet,
                 bounds: bounds,
@@ -918,8 +919,16 @@ extension LineChartRenderer {
             print("[CMChart] StockTrend 未支援 dataSet.fill")
             #endif
         }
-        drawFilledPath(context: context, path: filled.0, fillColor: upColor, fillAlpha: dataSet.fillAlpha)
-        drawFilledPath(context: context, path: filled.1, fillColor: downColor, fillAlpha: dataSet.fillAlpha)
+        if let valueUpFill = dataSet.valueUpFill {
+            drawFilledPath(context: context, path: filled.0, fill: valueUpFill, fillAlpha: dataSet.fillAlpha)
+        } else {
+            drawFilledPath(context: context, path: filled.0, fillColor: upColor, fillAlpha: dataSet.fillAlpha)
+        }
+        if let valueDownFill = dataSet.valueDownFill {
+            drawFilledPath(context: context, path: filled.1, fill: valueDownFill, fillAlpha: dataSet.fillAlpha)
+        } else {
+            drawFilledPath(context: context, path: filled.1, fillColor: downColor, fillAlpha: dataSet.fillAlpha)
+        }
     }
     
     /// get 股票走勢圖填色Path
