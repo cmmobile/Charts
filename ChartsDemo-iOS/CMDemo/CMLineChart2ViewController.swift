@@ -85,13 +85,13 @@ class CMLineChart2ViewController: UIViewController {
         let start: CGPoint = .init(x: Double(sIndex), y: klineInfos[sIndex].c)
         let end: CGPoint = .init(x: Double(eIndex), y: klineInfos[eIndex].c)
         chartView.set(drawDataSet: .init(start: start, end: end))
-        chartView.startDraw()
+        chartView.update(mode: .drawing)
     }
     
     @IBAction func saveAction(_ sender: Any) {
         let p0 = chartView.drawDataSet.startPoint
         let p1 = chartView.drawDataSet.endPoint
-        chartView.closeDraw()
+        chartView.update(mode: .none)
         saveBtn.isHidden = true
         cancelBtn.isHidden = true
         
@@ -100,7 +100,7 @@ class CMLineChart2ViewController: UIViewController {
     }
     
     @IBAction func cacnelAction(_ sender: Any) {
-        chartView.closeDraw()
+        chartView.update(mode: .none)
         saveBtn.isHidden = true
         cancelBtn.isHidden = true
     }
