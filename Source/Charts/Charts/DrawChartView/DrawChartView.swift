@@ -76,7 +76,7 @@ open class DrawChartView: CombinedChartView {
         drawBoard.setNeedsDisplay()
     }
     
-    override func tapGestureRecognized(_ recognizer: NSUITapGestureRecognizer) {
+    open override func tapGestureRecognized(_ recognizer: NSUITapGestureRecognizer) {
         let point = recognizer.location(in: self)
         switch drawMode {
         case .none:
