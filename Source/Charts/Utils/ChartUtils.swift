@@ -41,12 +41,12 @@ extension Comparable
 
 extension FloatingPoint
 {
-    var DEG2RAD: Self
+    public var DEG2RAD: Self
     {
         return self * .pi / 180
     }
 
-    var RAD2DEG: Self
+    public var RAD2DEG: Self
     {
         return self * 180 / .pi
     }
@@ -117,7 +117,7 @@ extension Double
 extension CGPoint
 {
     /// Calculates the position around a center point, depending on the distance from the center, and the angle of the position around the center.
-    func moving(distance: CGFloat, atAngle angle: CGFloat) -> CGPoint
+    public func moving(distance: CGFloat, atAngle angle: CGFloat) -> CGPoint
     {
         return CGPoint(x: x + distance * cos(angle.DEG2RAD),
                        y: y + distance * sin(angle.DEG2RAD))
