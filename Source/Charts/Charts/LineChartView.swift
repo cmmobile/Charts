@@ -15,7 +15,7 @@ import CoreGraphics
 /// Chart that draws lines, surfaces, circles, ...
 open class LineChartView: BarLineChartViewBase, LineChartDataProvider
 {
-    internal override func initialize()
+    open override func initialize()
     {
         super.initialize()
         

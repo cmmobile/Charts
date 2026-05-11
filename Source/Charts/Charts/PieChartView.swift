@@ -86,7 +86,7 @@ open class PieChartView: PieRadarChartViewBase
         super.init(coder: aDecoder)
     }
     
-    internal override func initialize()
+    open override func initialize()
     {
         super.initialize()
         
