@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreGraphics
+import UIKit
 
 /// 股價走勢圖專用DataSet
 public class StockTrendLineChartDataSet: LineChartDataSet {

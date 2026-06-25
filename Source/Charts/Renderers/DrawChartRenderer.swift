@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreGraphics
+import UIKit
 
 public class DrawChartRenderer: BarLineScatterCandleBubbleRenderer {
     
