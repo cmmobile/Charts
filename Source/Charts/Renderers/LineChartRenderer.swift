@@ -11,6 +11,7 @@
 
 import Foundation
 import CoreGraphics
+import UIKit
 
 open class LineChartRenderer: LineRadarRenderer
 {
